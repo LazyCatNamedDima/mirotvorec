@@ -15,25 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $genre = trim($_POST['genre']);
     $description = trim($_POST['description']);
     $user_id = $_SESSION['user_id'];
+    $image_name = null;
 
-    if (empty($title)) {
-        $error = "Название мира обязательно!";
-    } else {
-        try {
-            $sql = "INSERT INTO worlds (user_id, title, genre, description) 
-                    VALUES (:user_id, :title, :genre, :description)";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                'user_id'     => $user_id,
-                'title'       => $title,
-                'genre'       => $genre,
-                'description' => $description
-            ]);
-            
-            $success = "Мир «" . htmlspecialchars($title) . "» успешно создан! <a href='profile.php'>Перейти в профиль</a>";
-        } catch (PDOException $e) {
-            $error = "Ошибка при сохранении: " . $e->getMessage();
-        }
+    if (!empty($_FILES['image']['name'])) {
+        $image_name = time() . '_' . $_FILES['image']['name'];
+        move_uploaded_file($_FILES['image']['tmp_name'], 'uploads/' . $image_name);
+    }
+
+    if (!empty($title)) {
+        $sql = "INSERT INTO worlds (user_id, title, genre, description, image) 
+                VALUES (:user_id, :title, :genre, :description, :image)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'user_id' => $user_id,
+            'title' => $title,
+            'genre' => $genre,
+            'description' => $description,
+            'image' => $image_name
+        ]);
+        $success = "Мир создан!";
     }
 }
 
@@ -54,7 +54,7 @@ include 'inc/header.php';
                     <div class="alert alert-success"><?= $success ?></div>
                 <?php endif; ?>
 
-                <form action="create.php" method="POST">
+                <form action="create.php" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Название мира</label>
                         <input type="text" name="title" class="form-control" placeholder="Например: Средиземье" required>
@@ -74,6 +74,11 @@ include 'inc/header.php';
                     <div class="mb-3">
                         <label class="form-label fw-bold">Описание мира</label>
                         <textarea name="description" class="form-control" rows="6" placeholder="Опишите основы вашего мира..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Обложка мира</label>
+                        <input type="file" name="image" class="form-control">
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">

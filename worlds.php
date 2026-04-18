@@ -20,6 +20,9 @@ include 'inc/header.php';
         <div class="col">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
+                    <?php if ($world['image']): ?>
+                        <img src="uploads/<?= $world['image'] ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <?php endif; ?>
                     <h5 class="card-title"><?= htmlspecialchars($world['title']) ?></h5>
                     <h6 class="card-subtitle mb-2 text-muted small">Автор: <?= htmlspecialchars($world['author']) ?></h6>
                     <span class="badge bg-light text-dark border mb-2"><?= htmlspecialchars($world['genre']) ?></span>

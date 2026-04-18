@@ -32,6 +32,10 @@ include 'inc/header.php';
             <div class="col">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
+                        <?php if ($world['image']): ?>
+                            <img src="uploads/<?= $world['image'] ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <?php endif; ?>
+                    
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title text-primary"><?= htmlspecialchars($world['title']) ?></h5>
                             <span class="badge bg-secondary"><?= htmlspecialchars($world['genre']) ?></span>
@@ -49,9 +53,12 @@ include 'inc/header.php';
                             if ($chars): ?>
                                 <ul class="list-unstyled small">
                                     <?php foreach ($chars as $char): ?>
-                                        <li class="border-bottom py-1">
-                                            <strong><?= htmlspecialchars($char['name']) ?></strong> 
-                                            <span class="text-muted">— <?= htmlspecialchars($char['role']) ?></span>
+                                        <li class="border-bottom py-1 d-flex justify-content-between align-items-center">
+                                            <span>
+                                                <strong><?= htmlspecialchars($char['name']) ?></strong> 
+                                                <span class="text-muted">— <?= htmlspecialchars($char['role']) ?></span>
+                                            </span>
+                                            <a href="delete_character.php?id=<?= $char['id'] ?>" class="text-danger" style="text-decoration:none;" onclick="return confirm('Удалить героя?')">Удалить</a>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
