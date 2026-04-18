@@ -24,10 +24,13 @@
                     
                     <li class="nav-item"><a class="nav-link btn btn-outline-primary btn-sm mx-2 text-white" href="create.php">+ Создать мир</a></li>
 
+                    <li class="nav-item"><a class="nav-link" href="users.php">Пользователи</a></li>
+
                     <li class="nav-item"><a class="nav-link btn btn-outline-primary btn-sm mx-2 text-white" href="settings.php">Настройки</a></li>
                     
                     <li class="nav-item"><a class="nav-link" href="logout.php">Выход</a></li>
                 <?php else: ?>
+                    <li class="nav-item"><a class="nav-link" href="users.php">Пользователи</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.php">Вход</a></li>
                     <li class="nav-item"><a class="nav-link" href="register.php">Регистрация</a></li>
                 <?php endif; ?>
