@@ -23,6 +23,8 @@
                     <li class="nav-item"><a class="nav-link fw-bold text-info" href="profile.php">Мои миры (<?= $_SESSION['user_login'] ?>)</a></li>
                     
                     <li class="nav-item"><a class="nav-link btn btn-outline-primary btn-sm mx-2 text-white" href="create.php">+ Создать мир</a></li>
+
+                    <li class="nav-item"><a class="nav-link btn btn-outline-primary btn-sm mx-2 text-white" href="settings.php">Настройки</a></li>
                     
                     <li class="nav-item"><a class="nav-link" href="logout.php">Выход</a></li>
                 <?php else: ?>

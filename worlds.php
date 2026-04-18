@@ -2,7 +2,7 @@
 require_once 'inc/db.php';
 session_start();
 
-$sql = "SELECT worlds.*, users.login AS author 
+$sql = "SELECT worlds.*, users.login AS author, users.avatar AS author_avatar 
         FROM worlds 
         JOIN users ON worlds.user_id = users.id 
         ORDER BY created_at DESC";
@@ -20,6 +20,12 @@ include 'inc/header.php';
         <div class="col">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <?php if ($world['author_avatar']): ?>
+                            <img src="uploads/<?= $world['author_avatar'] ?>" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
+                        <?php endif; ?>
+                        <h6 class="card-subtitle text-muted small mb-0">Автор: <?= htmlspecialchars($world['author']) ?></h6>
+                    </div>
                     <?php if ($world['image']): ?>
                         <img src="uploads/<?= $world['image'] ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
                     <?php endif; ?>
