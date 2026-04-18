@@ -11,8 +11,14 @@ include 'inc/header.php';
         <h1 class="display-5 fw-bold lh-1 mb-3">Создавайте свои миры легко</h1>
         <p class="lead">«МироТворец» — это место, где писатели могут структурировать свои идеи. Описывайте локации, продумывайте историю и храните всё в одном месте.</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-            <a href="register.php" class="btn btn-primary btn-lg px-4 me-md-2">Начать творить</a>
-            <a href="about.php" class="btn btn-outline-secondary btn-lg px-4">О проекте</a>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php" class="btn btn-primary btn-lg px-4 me-md-2">Мои миры</a>
+                <a href="worlds.php" class="btn btn-outline-secondary btn-lg px-4">Смотреть все</a>
+                <a href="about.php" class="btn btn-outline-secondary btn-lg px-4">О проекте</a>
+            <?php else: ?>
+                <a href="register.php" class="btn btn-primary btn-lg px-4 me-md-2">Начать творить</a>
+                <a href="about.php" class="btn btn-outline-secondary btn-lg px-4">О проекте</a>
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-lg-6 text-center">
