@@ -29,6 +29,9 @@ $stmt->execute([$receiver_id]);
 $receiver = $stmt->fetch();
 
 include 'inc/header.php';
+
+$stmt_read = $pdo->prepare("UPDATE messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = ?");
+$stmt_read->execute([$receiver_id, $my_id]);
 ?>
 
 <div class="row justify-content-center">

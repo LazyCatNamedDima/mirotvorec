@@ -1,3 +1,13 @@
+<?php
+$unread_total = 0;
+if (isset($_SESSION['user_id'])) {
+    require_once 'inc/db.php';
+    $stmt_u = $pdo->prepare("SELECT COUNT(*) FROM messages WHERE receiver_id = ? AND is_read = 0");
+    $stmt_u->execute([$_SESSION['user_id']]);
+    $unread_total = $stmt_u->fetchColumn();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -25,6 +35,15 @@
                     <li class="nav-item"><a class="nav-link btn btn-outline-primary btn-sm mx-2 text-white" href="create.php">+ Создать мир</a></li>
 
                     <li class="nav-item"><a class="nav-link" href="users.php">Пользователи</a></li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_messages.php">
+                            Сообщения 
+                            <?php if ($unread_total > 0): ?>
+                                <span class="badge bg-danger"><?= $unread_total ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
 
                     <li class="nav-item"><a class="nav-link btn btn-outline-primary btn-sm mx-2 text-white" href="settings.php">Настройки</a></li>
                     
