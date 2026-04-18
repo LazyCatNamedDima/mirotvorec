@@ -2,7 +2,6 @@
 require_once 'inc/db.php';
 session_start();
 
-// Если не залогинен — уходим
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -10,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Получаем все миры этого пользователя
 $sql = "SELECT * FROM worlds WHERE user_id = :user_id ORDER BY created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
@@ -45,7 +43,7 @@ include 'inc/header.php';
                     <div class="card-footer bg-transparent border-top-0 d-flex justify-content-end gap-2">
                         <a href="edit.php?id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-warning">Редактировать</a>
                         <a href="delete.php?id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Вы уверены?')">Удалить</a>
-                    </div>
+                        <a href="add_character.php?world_id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-info">+ Герой</a>
                 </div>
             </div>
         <?php endforeach; ?>
