@@ -36,14 +36,36 @@ include 'inc/header.php';
                             <h5 class="card-title text-primary"><?= htmlspecialchars($world['title']) ?></h5>
                             <span class="badge bg-secondary"><?= htmlspecialchars($world['genre']) ?></span>
                         </div>
-                        <p class="card-text text-muted mt-2">
-                            <?= mb_strimwidth(htmlspecialchars($world['description']), 0, 150, "...") ?>
-                        </p>
+                        <p class="card-text mt-2"><?= nl2br(htmlspecialchars($world['description'])) ?></p>
+
+                        <div class="mt-3">
+                            <h6>👥 Персонажи:</h6>
+                            <?php
+                            
+                            $stmt_chars = $pdo->prepare("SELECT * FROM characters WHERE world_id = ?");
+                            $stmt_chars->execute([$world['id']]);
+                            $chars = $stmt_chars->fetchAll();
+
+                            if ($chars): ?>
+                                <ul class="list-unstyled small">
+                                    <?php foreach ($chars as $char): ?>
+                                        <li class="border-bottom py-1">
+                                            <strong><?= htmlspecialchars($char['name']) ?></strong> 
+                                            <span class="text-muted">— <?= htmlspecialchars($char['role']) ?></span>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                <p class="text-muted small">Героев пока нет...</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
+                    
                     <div class="card-footer bg-transparent border-top-0 d-flex justify-content-end gap-2">
+                        <a href="add_character.php?world_id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-info">+ Герой</a>
                         <a href="edit.php?id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-warning">Редактировать</a>
                         <a href="delete.php?id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Вы уверены?')">Удалить</a>
-                        <a href="add_character.php?world_id=<?= $world['id'] ?>" class="btn btn-sm btn-outline-info">+ Герой</a>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
